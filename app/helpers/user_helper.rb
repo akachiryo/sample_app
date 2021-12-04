@@ -5,6 +5,13 @@ module UserHelper
     image_tag(gravatar_url, alt: user.name, class: "gravatar")
   end
 
+  def gravatar_for(user, options = { size: 80 })
+    size         = options[:size]
+    gravatar_id  = Digest::MD5::hexdigest(user.email.downcase)
+    gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}?s=#{size}"
+    image_tag(gravatar_url, alt: user.name, class: "gravatar")
+  end
+
   def current_user
     if (user_id = session[:user_id])
       @current_user ||= User.find_by(id: user_id)
